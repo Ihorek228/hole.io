@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private int MovementSpeed;
+    private Rigidbody rb;
+
+    private void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void MoveTheHole()
     {
-        
+        float rotationInput = Input.GetAxis("Horizontal");
+        float movementInput = Input.GetAxis("Vertical");
+
+        transform.Rotate(0.0f, rotationInput, 0.0f, Space.Self);
+
+        rb.velocity = transform.forward * movementInput * MovementSpeed;
     }
+
+    private void Update()
+    {
+        MoveTheHole();
+    }
+    
 }
