@@ -4,22 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private int MovementSpeed;
-    private Rigidbody rb;
-
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
+    [SerializeField] private float movementSpeed = 10f;
 
     private void MoveTheHole()
     {
-        float rotationInput = Input.GetAxis("Horizontal");
-        float movementInput = Input.GetAxis("Vertical");
-
-        transform.Rotate(0.0f, rotationInput, 0.0f, Space.Self);
-
-        rb.velocity = transform.forward * movementInput * MovementSpeed;
+        float z = Input.GetAxis("Vertical");
+        float x = Input.GetAxis("Horizontal");
+        transform.position = new Vector3(transform.position.x + x * movementSpeed * Time.deltaTime,transform.position.y,transform.position.z + z * movementSpeed * Time.deltaTime);
+    
     }
 
     private void Update()
