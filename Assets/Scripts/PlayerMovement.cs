@@ -16,7 +16,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        MoveTheHole();
+        if (IsPaused = false)
+        {
+            MoveTheHole();
+        }
     }
     
 }

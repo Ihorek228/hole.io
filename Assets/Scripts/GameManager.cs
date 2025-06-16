@@ -7,13 +7,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-public class GameManage : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public Slider HealthBar;
     public static bool IsPaused;
     [SerializeField] private float gameDuration;
     [SerializeField] private float timeLeft;
     [SerializeField] private GameObject menuLose;
+    [SerializeField] private GameObject menuPause;
     [SerializeField] private GameObject menuWin;
     [SerializeField] private Transform level;
     [SerializeField] private GameObject player;
@@ -25,6 +26,13 @@ public class GameManage : MonoBehaviour
         menuLose.SetActive(false);
         menuWin.SetActive(false);
     }
+
+    public void PauseGame()
+    {
+        IsPaused = true;
+        menuPause.SetActive(true);
+    }
+    
 
     public void WinGame()
     {
@@ -49,6 +57,7 @@ public class GameManage : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         menuLose.SetActive(false);
+        menuPause.SetActive(false);
         menuWin.SetActive(false);
     }
 
@@ -62,13 +71,16 @@ public class GameManage : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (HealthBar.value == 0)
+        if (IsPaused == false)
         {
-            LoseGame();
-        }
-        if (player.GetComponent<Hole>().MaxFoodScore > 500)
-        {
-            WinGame();
+            if (HealthBar.value == 0)
+            {
+                LoseGame();
+            }
+            if (player.GetComponent<Hole>().MaxFoodScore > 500)
+            {
+                WinGame();
+            }
         }
     }
 }

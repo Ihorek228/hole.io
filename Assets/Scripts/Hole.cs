@@ -1,25 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 using System;
+using UnityEngine.UI;
 
 public class Hole : MonoBehaviour
 {
     public float StarvationRate;
-    public float FoodScore;
+    public float FoodScore = 10f;
     public float MaxFoodScore;
+    public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI MaxScoreText;
-    public GameObject AddedScoreTextPrefab;
     public Slider HealthBar;
-
-    [SerializeField] private GameManage gameManager;
+    [SerializeField] private GameManager GameManager;
 
     private void Start()
     {
         MaxFoodScore = FoodScore;
-        MaxScoreText.text = Math.Floor(FoodScore).ToString();
+        ScoreText.text = Math.Floor(FoodScore).ToString();
         MaxScoreText.text = Math.Floor(MaxFoodScore).ToString();
         HealthBar.maxValue = MaxFoodScore;
         HealthBar.value = FoodScore;
@@ -27,7 +24,7 @@ public class Hole : MonoBehaviour
 
     public void Eat(float changeFoodScore)
     {
-        if (GameManage.IsPaused) return;
+        if (GameManager.IsPaused) return;
         
         FoodScore += changeFoodScore;
 
@@ -35,6 +32,8 @@ public class Hole : MonoBehaviour
         {
             FoodScore = 0;
         }
+
+        ScoreText.text = Math.Floor(FoodScore).ToString();
 
         if (FoodScore > MaxFoodScore)
         {
@@ -45,16 +44,22 @@ public class Hole : MonoBehaviour
 
         HealthBar.value = FoodScore;
         transform.localScale += new Vector3(changeFoodScore / 10, changeFoodScore / 10, changeFoodScore / 10);
+
+        if (changeFoodScore > 0)
+        {
+            GameManager.IsGameOver();
+        }
         
     }
 
-    private void FixedUpdate()
-    {
-        if (GameManage.IsPaused) return;        
+	private void FixedUpdate()
+	{
+        if (GameManager.IsPaused) return;
+        
         if (FoodScore > 0)
         {
             var StarveValue = FoodScore * StarvationRate;
             Eat(-StarveValue);
         }
-    }
+	}
 }
