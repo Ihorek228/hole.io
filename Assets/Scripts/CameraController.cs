@@ -4,22 +4,18 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform hole;
-    public Camera cam;
-    public float baseSize = 5f;
-    public float scaleMultiplier = 2f;
+    public GameObject player;
     public Vector3 offset;
-
-    private Vector3 velocity = Vector3.zero;
+    private float PosY;
+    private float PosZ;
 
     void LateUpdate()
     {
-        if (hole == null) return;
+        if (player == null) return;
 
-        Vector3 targetPosition = hole.position + offset;
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, 0.2f);
-
-        float holeScale = hole.localScale.x; 
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, baseSize + holeScale * scaleMultiplier, Time.deltaTime * 2f);
+        PosY = offset.y + player.transform.localScale.y;
+        PosZ = offset.z - player.transform.localScale.z;
+        //transform.position = new Vector3(player.transform.position.x, PosY, player.transform.position.z + PosZ);
+        transform.position = player.transform.position + new Vector3(0, PosY, PosZ);
     }
 }

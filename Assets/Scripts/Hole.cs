@@ -6,12 +6,15 @@ using UnityEngine.UI;
 public class Hole : MonoBehaviour
 {
     public float StarvationRate;
-    public float FoodScore = 10f;
+    public float FoodScore;
     public float MaxFoodScore;
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI MaxScoreText;
+    public GameObject AddedScoreTextPrefab;
+    public Transform HoleHUD;
     public Slider HealthBar;
-    [SerializeField] private GameManager GameManager;
+
+    [SerializeField] private GameManager gameManager;
 
     private void Start()
     {
@@ -47,7 +50,11 @@ public class Hole : MonoBehaviour
 
         if (changeFoodScore > 0)
         {
-            GameManager.IsGameOver();
+            GameObject AddedScoreText = Instantiate(AddedScoreTextPrefab, HoleHUD);
+            AddedScoreText.GetComponent<TextMeshProUGUI>().text = "+" + Math.Floor(changeFoodScore).ToString();
+            gameManager.IsGameOver();
+
+            Destroy(AddedScoreText, 2f);
         }
         
     }

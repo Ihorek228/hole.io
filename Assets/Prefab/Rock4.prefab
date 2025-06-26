@@ -146,4 +146,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a60c509d24b52e848b3972b167a8428c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FoodScore: 2
+  FoodScore: 1
