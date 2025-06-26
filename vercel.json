@@ -1,17 +1,10 @@
 {
   "headers": [
     {
-      "source": "/Build/(.*)\\.gz",
+      "source": "/Build/(.*)\\.js\\.gz",
       "headers": [
         { "key": "Content-Encoding", "value": "gzip" },
         { "key": "Content-Type", "value": "application/javascript" }
-      ]
-    },
-    {
-      "source": "/Build/(.*)\\.data\\.gz",
-      "headers": [
-        { "key": "Content-Encoding", "value": "gzip" },
-        { "key": "Content-Type", "value": "application/octet-stream" }
       ]
     },
     {
@@ -19,6 +12,13 @@
       "headers": [
         { "key": "Content-Encoding", "value": "gzip" },
         { "key": "Content-Type", "value": "application/wasm" }
+      ]
+    },
+    {
+      "source": "/Build/(.*)\\.data\\.gz",
+      "headers": [
+        { "key": "Content-Encoding", "value": "gzip" },
+        { "key": "Content-Type", "value": "application/octet-stream" }
       ]
     }
   ]
